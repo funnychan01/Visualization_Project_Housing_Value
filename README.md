@@ -1,3 +1,13 @@
+---
+title: "Boston"
+author: "Jackie Chan"
+date: "February 27, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+
 library(MASS)
 library(ggplot2)
 library(plyr)
@@ -24,8 +34,48 @@ for (i in 1:length(quarter)){
 }
 Boston$quarters <- factor(quarter)
 rm(count, quarter, i)
+```
 
-# Single variable plot - crime rate
+Background:
+The dataset is in the library MASS, named Boston
+Housing values in suburbs of Boston
+Relation between housing values and different characteristics
+
+Hypothesis:
+
+house size: bigger house is more expensive than smaller one
+house location: houses has proximity to facilities are more expensive
+house year: older houses are cheaper
+house amenities: furnished houses are more expensive
+community facilities: houses in more established community are more expensive
+stability: houses in lower crime rate are more expensive
+famous: houses in famous community are more expensive
+transport: houses close to public transport are more expensive
+house environment: houses have garden are more expensive
+interest rate: the higher interest rate, the lower the demand of buying houses. When demand < supply, price drops
+economic growth: bad economic environment lower the housing price, vice versa
+room number: the more the rooms a house has, the higher the housing value
+bathroom number: same as room number
+
+Variables in the dataset:
+
+crim: per capita crime rate by town.
+zn: proportion of residential land zoned for lots over 25,000 sq.ft.
+indus: proportion of non-retail business acres per town.
+chas: Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).
+nox: nitrogen oxides concentration (parts per 10 million).
+rm: average number of rooms per dwelling.
+age: proportion of owner-occupied units built prior to 1940.
+dis: weighted mean of distances to five Boston employment centres.
+rad: index of accessibility to radial highways.
+tax: full-value property-tax rate per \$10,000.
+ptratio: pupil-teacher ratio by town.
+black: 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town.
+lstat: lower status of the population (percent).
+medv: median value of owner-occupied homes in \$1000s.
+
+```{r Single variable plot}
+# crime rate
 ggplot(Boston, aes(x = crim)) +
         geom_histogram(aes(y = ..density..),
                        color = "black",
@@ -51,7 +101,7 @@ ggplot(Boston, aes(x = crim, color = quarters)) +
         geom_vline(data = qboston, aes(xintercept = crime_mean, color = quarters), 
                    linetype = "dashed", size = 1)
 
-# Single variable plot - non-retail business arces
+# non-retail business arces
 ggplot(Boston, aes(x = indus)) +
         geom_histogram(aes(y = ..density..),
                        color = "black",
@@ -82,7 +132,7 @@ ggplot(Boston, aes(x = indus, fill = quarters, color = quarters)) +
                    size = 1,
                    linetype = "dashed")
 
-# Single variable plot - nitrogen oxide concentration
+# nitrogen oxide concentration
 ggplot(Boston, aes(x = nox)) +
         geom_histogram(aes(y = ..density..),
                        color = "black", 
@@ -108,3 +158,4 @@ ggplot(Boston, aes(x = nox)) +
                                        color = quarters),
                    linetype = "dashed",
                    size = 1)
+```
